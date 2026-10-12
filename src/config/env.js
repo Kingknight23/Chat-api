@@ -10,7 +10,7 @@ const env = {
     adminEmail: process.env.ADMIN_EMAIL,
     adminUsername: process.env.ADMIN_USERNAME,
     adminPassword: process.env.ADMIN_PASSWORD,
-    corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    corsOrigin: (process.env.CORS_ORIGIN || "http://localhost:5173").replace(/\/+$/, ""),
     trustProxy: String(process.env.TRUST_PROXY || "false").toLowerCase() === "true",
     https: String(process.env.HTTPS || "false").toLowerCase() === "true",
     httpsKeyPath: process.env.HTTPS_KEY_PATH,
