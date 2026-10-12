@@ -396,9 +396,3 @@ Set `CORS_ORIGIN` to the exact frontend origin, including scheme and port, for e
 ### Attachment upload fails
 
 Confirm the user is authenticated and belongs to the target conversation, the request uses an accepted content type, and the file is below the configured 15 MB request limit.
-
----
-
-## License
-
-Add your chosen license here before publishing or distributing the project.
