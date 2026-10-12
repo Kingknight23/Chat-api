@@ -25,7 +25,7 @@ app.set("trust proxy", env.trustProxy ? 1 : false);
 app.use(helmet());
 app.use(cors({
     origin: env.corsOrigin,
-    credentials: false
+    credentials: true
 }));
 app.use(express.json({ limit: "3mb" }));
 app.use(morgan(env.nodeEnv === "production" ? "combined" : "dev"));
