@@ -1,0 +1,11 @@
+import express from "express";
+import { create, update, remove, addMember, removeMember, makeAdmin, leave } from "../controllers/group.controller.js";
+const router = express.Router();
+router.post("/", create);
+router.patch("/:conversationId", update);
+router.delete("/:conversationId", remove);
+router.post("/:conversationId/members", addMember);
+router.delete("/:conversationId/members/:userId", removeMember);
+router.patch("/:conversationId/members/:userId/admin", makeAdmin);
+router.post("/:conversationId/leave", leave);
+export default router;
