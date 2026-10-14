@@ -1,5 +1,6 @@
 import ConversationMember from "../models/ConversationMember.js";
 import UserKey from "../models/UserKey.js";
+import { ensureUserKey } from "./encryption.service.js";
 
 const normalizePublicKey = (publicKey) => {
     if (!publicKey) throw new Error("Public key is required");
