@@ -29,7 +29,7 @@ export const uploadAttachment = async (req, res, next) => {
 export const downloadAttachment = async (req, res, next) => {
   try {
     const filename = path.basename(req.params.filename);
-    const messages = await Message.find({ "payload.attachment.filename": filename }).select("conversationId payload").lean();
+    const messages = await Message.find({ "attachment.filename": filename }).select("conversationId payload").lean();
     if (!messages.length) return res.status(404).json({ message: "Attachment not found" });
     const member = await ConversationMember.findOne({ conversationId: messages[0].conversationId, userId: req.user.userId });
     if (!member) return res.status(403).json({ message: "You do not have access to this attachment" });
