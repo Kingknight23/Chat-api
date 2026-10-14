@@ -34,6 +34,7 @@ export const downloadAttachment = async (req, res, next) => {
     const member = await ConversationMember.findOne({ conversationId: messages[0].conversationId, userId: req.user.userId });
     if (!member) return res.status(403).json({ message: "You do not have access to this attachment" });
     const filePath = path.join(uploadDir, filename);
+    console.log("Attachment file path:", filePath);
     if (!fs.existsSync(filePath)) return res.status(404).json({ message: "Attachment file is missing" });
     const attachment = messages[0].payload.attachment;
     res.setHeader("Content-Type", attachment.mimeType || "application/octet-stream");
