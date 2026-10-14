@@ -9,19 +9,41 @@ const normalizePublicKey = (publicKey) => {
     return JSON.stringify(publicKey);
 };
 
-const savePublicKey = async (userId, publicKey, algorithm = "RSA-OAEP-SHA256") => {
-    const normalized = normalizePublicKey(publicKey);
-    return UserKey.findOneAndUpdate(
-        { userId },
-        {
-            $set: {
-                clientPublicKey: normalized,
-                clientAlgorithm: algorithm
-            }
-        },
-        { new: true }
+
+const savePublicKey = async (
+  userId,
+  publicKey,
+  algorithm = "RSA-OAEP-SHA256"
+) => {
+  const normalized = normalizePublicKey(publicKey);
+
+  // Ensure a database record exists first.
+  await ensureUserKey(userId);
+
+  const result = await UserKey.findOneAndUpdate(
+    { userId },
+    {
+      $set: {
+        clientPublicKey: normalized,
+        clientAlgorithm: algorithm || "RSA-OAEP-SHA256",
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+      upsert: false,
+    }
+  );
+
+  if (!result) {
+    throw new Error(
+      `Could not save public key for user ${userId}`
     );
+  }
+
+  return result;
 };
+
 
 const getConversationPublicKeys = async (userId, conversationId) => {
     const member = await ConversationMember.findOne({ conversationId, userId });
